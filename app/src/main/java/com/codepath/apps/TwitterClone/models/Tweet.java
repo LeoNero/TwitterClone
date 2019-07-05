@@ -33,6 +33,12 @@ public class Tweet {
     @ColumnInfo
     public int retweetCount;
 
+    @ColumnInfo
+    public boolean favorited;
+
+    @ColumnInfo
+    public boolean retweeted;
+
     @Embedded
     public User user;
 
@@ -44,6 +50,8 @@ public class Tweet {
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.favoriteCount = jsonObject.getInt("favorite_count");
         tweet.retweetCount = jsonObject.getInt("retweet_count");
+        tweet.favorited = jsonObject.getBoolean("favorited");
+        tweet.retweeted = jsonObject.getBoolean("retweeted");
         tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
 
         return tweet;

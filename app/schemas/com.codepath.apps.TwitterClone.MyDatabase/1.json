@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "2472674a4144e2012afca12e8bb2fdc5",
+    "identityHash": "56a64030101a0e776b939025b14060d8",
     "entities": [
       {
         "tableName": "Tweet",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER NOT NULL, `body` TEXT, `createdAt` TEXT, `favoriteCount` INTEGER NOT NULL, `retweetCount` INTEGER NOT NULL, `userId` INTEGER, `name` TEXT, `screenName` TEXT, `profileImageUrl` TEXT, PRIMARY KEY(`uid`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER NOT NULL, `body` TEXT, `createdAt` TEXT, `favoriteCount` INTEGER NOT NULL, `retweetCount` INTEGER NOT NULL, `favorited` INTEGER NOT NULL, `retweeted` INTEGER NOT NULL, `userId` INTEGER, `name` TEXT, `screenName` TEXT, `profileImageUrl` TEXT, PRIMARY KEY(`uid`))",
         "fields": [
           {
             "fieldPath": "uid",
@@ -35,6 +35,18 @@
           {
             "fieldPath": "retweetCount",
             "columnName": "retweetCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "favorited",
+            "columnName": "favorited",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "retweeted",
+            "columnName": "retweeted",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -75,7 +87,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"2472674a4144e2012afca12e8bb2fdc5\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"56a64030101a0e776b939025b14060d8\")"
     ]
   }
 }
