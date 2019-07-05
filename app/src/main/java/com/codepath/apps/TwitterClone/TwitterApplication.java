@@ -1,4 +1,4 @@
-package com.codepath.apps.restclienttemplate;
+package com.codepath.apps.TwitterClone;
 
 import android.app.Application;
 import android.arch.persistence.room.Room;
