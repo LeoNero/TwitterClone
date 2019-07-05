@@ -1,8 +1,7 @@
 package com.codepath.apps.TwitterClone.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,13 +15,13 @@ import com.codepath.apps.TwitterClone.R;
 import com.codepath.apps.TwitterClone.TwitterApplication;
 import com.codepath.apps.TwitterClone.TwitterClient;
 import com.codepath.apps.TwitterClone.adapters.TweetAdapter;
+import com.codepath.apps.TwitterClone.fragments.ComposeFragment;
 import com.codepath.apps.TwitterClone.models.Tweet;
 import com.codepath.apps.TwitterClone.utils.EndlessRecyclerViewScrollListener;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
-public class TimelineActivity extends AppCompatActivity {
+public class TimelineActivity extends AppCompatActivity implements ComposeFragment.ComposeDialogListener  {
     private final int REQUEST_CODE = 20;
 
     long smallestTweetId = Long.MAX_VALUE;
@@ -91,16 +90,10 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-            Tweet tweet = Parcels.unwrap(data.getExtras().getParcelable(Tweet.class.getSimpleName()));
-
-            tweets.add(0, tweet);
-            tweetAdapter.notifyItemInserted(0);
-            rvTweets.scrollToPosition(0);
-        }
+    public void onSavedTweet(Tweet tweet) {
+        tweets.add(0, tweet);
+        tweetAdapter.notifyItemInserted(0);
+        rvTweets.scrollToPosition(0);
     }
 
     private void populateTimeline(long maxId, final boolean resetList) {
@@ -138,8 +131,9 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     private void onComposeTweetClick() {
-        Intent i = new Intent(this, ComposeActivity.class);
-        startActivityForResult(i, REQUEST_CODE);
+        FragmentManager fm = getSupportFragmentManager();
+        ComposeFragment editNameDialogFragment = ComposeFragment.newInstance();
+        editNameDialogFragment.show(fm, "fragment_compose");
     }
 
     private void setupSwipeContainer() {
