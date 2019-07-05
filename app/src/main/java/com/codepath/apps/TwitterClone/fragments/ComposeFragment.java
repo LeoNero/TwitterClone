@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,11 +111,6 @@ public class ComposeFragment extends DialogFragment {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     Tweet tweet = Tweet.fromJSON(response);
-
-                    if (listener != null) {
-                      Log.d("AAAAAAAAA", "BBBBBB");
-                    }
-
                     listener.onSavedTweet(tweet);
                 } catch (JSONException e) {
                     Toast.makeText(getContext(), "Error during parsing! Try again...", Toast.LENGTH_SHORT).show();
@@ -129,7 +123,6 @@ public class ComposeFragment extends DialogFragment {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 pd.dismiss();
                 Toast.makeText(getContext(), "Error! Try again...", Toast.LENGTH_SHORT).show();
-                Log.e("AAA", "A", throwable);
             }
         });
     }

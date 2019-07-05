@@ -1,14 +1,14 @@
 package com.codepath.apps.TwitterClone.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.codepath.apps.TwitterClone.R;
@@ -38,6 +38,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeFragme
     @BindView(R.id.rvTweet) RecyclerView rvTweets;
     @BindView(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
     @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.compose_tweet) FloatingActionButton fabComposeTweet;
 
     LinearLayoutManager linearLayoutManager;
     EndlessRecyclerViewScrollListener scrollListener;
@@ -67,26 +68,13 @@ public class TimelineActivity extends AppCompatActivity implements ComposeFragme
         setupSwipeContainer();
         setupScroll();
         populateTimeline(0, true);
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_timeline, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.compose_tweet:
+        fabComposeTweet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 onComposeTweetClick();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-
-        }
+            }
+        });
     }
 
     @Override

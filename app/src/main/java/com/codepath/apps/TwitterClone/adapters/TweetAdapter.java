@@ -21,6 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> {
     private List<Tweet> tweets;
@@ -52,6 +53,9 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
         Glide.with(context)
                 .load(tweet.user.profileImageUrl)
+                .bitmapTransform(new CropCircleTransformation(context))
+                .placeholder(R.drawable.ic_vector_person)
+                .error(R.drawable.ic_vector_person)
                 .into(holder.ivProfileImage);
     }
 
