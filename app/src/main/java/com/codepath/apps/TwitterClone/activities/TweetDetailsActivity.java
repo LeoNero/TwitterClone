@@ -2,6 +2,7 @@ package com.codepath.apps.TwitterClone.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import com.codepath.apps.TwitterClone.R;
@@ -18,6 +19,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
     @BindView(R.id.tvCreatedAt) TextView tvCreatedAt;
     @BindView(R.id.tvFavoriteCount) TextView tvFavoriteCount;
     @BindView(R.id.tvRetweetCount) TextView tvRetweetCount;
+    @BindView(R.id.toolbar) Toolbar toolbar;
 
     Tweet tweet;
 
@@ -27,6 +29,8 @@ public class TweetDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_details);
 
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
 
         tweet = Parcels.unwrap(getIntent().getParcelableExtra(Tweet.class.getSimpleName()));
 

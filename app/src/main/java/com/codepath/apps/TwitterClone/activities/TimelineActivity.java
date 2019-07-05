@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -37,6 +38,7 @@ public class TimelineActivity extends AppCompatActivity {
 
     @BindView(R.id.rvTweet) RecyclerView rvTweets;
     @BindView(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
+    @BindView(R.id.toolbar) Toolbar toolbar;
 
     LinearLayoutManager linearLayoutManager;
     EndlessRecyclerViewScrollListener scrollListener;
@@ -51,6 +53,8 @@ public class TimelineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timeline);
 
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
 
         client = TwitterApplication.getRestClient(this);
 

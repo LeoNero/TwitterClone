@@ -3,6 +3,7 @@ package com.codepath.apps.TwitterClone.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -23,6 +24,8 @@ import cz.msebera.android.httpclient.Header;
 
 public class ComposeActivity extends AppCompatActivity {
     @BindView(R.id.etComposeTweet) EditText etComposeTweet;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     TwitterClient client;
 
@@ -34,6 +37,8 @@ public class ComposeActivity extends AppCompatActivity {
         client = TwitterApplication.getRestClient(this);
 
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
     }
 
     public void onComposeTweet(View view) {
