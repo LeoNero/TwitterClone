@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.codepath.apps.TwitterClone.R;
 import com.codepath.apps.TwitterClone.TwitterApplication;
 import com.codepath.apps.TwitterClone.TwitterClient;
@@ -20,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class TweetDetailsActivity extends AppCompatActivity {
     @BindView(R.id.tvBody) TextView tvBody;
@@ -30,6 +33,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.btLike) Button btLike;
     @BindView(R.id.btRetweet) Button btRetweet;
+    @BindView(R.id.ivProfileImage) ImageView ivProfileImage;
 
     Tweet tweet;
     TwitterClient client;
@@ -47,8 +51,18 @@ public class TweetDetailsActivity extends AppCompatActivity {
         tweet = Parcels.unwrap(getIntent().getParcelableExtra(Tweet.class.getSimpleName()));
         client = TwitterApplication.getRestClient(this);
 
+        setupProfileImage();
         setTextViewsValues();
         setButtonsText();
+    }
+
+    private void setupProfileImage() {
+        Glide.with(this)
+                .load(tweet.user.profileImageUrl)
+                .bitmapTransform(new CropCircleTransformation(this))
+                .placeholder(R.drawable.ic_vector_person)
+                .error(R.drawable.ic_vector_person)
+                .into(ivProfileImage);
     }
 
     private void setTextViewsValues() {
@@ -60,7 +74,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
     }
 
     private void setFavoriteCountText(int count) {
-        tvFavoriteCount.setText("Favorites: " + count);
+        tvFavoriteCount.setText("Likes: " + count);
     }
 
     private void setRetweetCountText(int count) {
