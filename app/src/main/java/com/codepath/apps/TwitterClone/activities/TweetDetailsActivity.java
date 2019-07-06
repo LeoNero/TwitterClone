@@ -42,6 +42,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Tweet details");
 
         tweet = Parcels.unwrap(getIntent().getParcelableExtra(Tweet.class.getSimpleName()));
         client = TwitterApplication.getRestClient(this);
